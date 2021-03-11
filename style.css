@@ -1,0 +1,47 @@
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: #f3f3f3;
+}
+
+main {
+    margin-bottom: 2rem;
+}
+
+a {
+    color: #fff!important;
+    text-decoration: none!important;
+}
+    
+
+header h1 {
+    font-size: 2rem!important;
+}
+
+.jumbotron p {
+    font-size: 1.4rem;
+}
+
+.card h3 {
+    font-size: 1.5rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.text-size {
+    font-size: 1.2rem;
+}
+
+.carousel img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+}
+
+footer {
+    padding: 2rem;
+}
+
+footer h3 {
+    font-size: 1.2rem;
+}
