@@ -37,8 +37,25 @@ header h1 {
 }
 
 .card img {
-    height: 300px;
+    height: 500px;
     object-fit: cover;
+    object-position: top;
+}
+
+.price {
+    font-size: 1.6rem;
+}
+
+button.btn {
+    background-color: #d21929;
+    color: #fff;
+    font-size: 1.2rem;
+    padding: .8rem 1.8rem;
+}
+
+button.btn:hover {
+    color: #fff;
+
 }
 
 footer h3 {
