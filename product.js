@@ -33,7 +33,7 @@ fetch(urlId)
                         )} €</p>
                         <p class="card-text">${data.description}</p>
                         <form>
-                            Choissez la couleur de ${data.name} : 
+                            Choisissez la couleur de ${data.name} : 
                             <select id="selectColors"></select>
                         </form>
                     </div>
