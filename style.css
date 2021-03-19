@@ -36,12 +36,6 @@ header h1 {
     object-fit: cover;
 }
 
-.card img {
-    height: 500px;
-    object-fit: cover;
-    object-position: top;
-}
-
 .price {
     font-size: 1.6rem;
 }
