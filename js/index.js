@@ -17,7 +17,7 @@ const showTeddies = async() => {
         (teddy) =>
           `
             <div class="col-12 col-lg-6" >
-              <div class="card mb-3">
+              <aricle class="card mb-3">
                   <img class="card-img-top"src="${teddy.imageUrl}"></img>
                   <div class="card-body">
                       <h2 class="card-title">${teddy.name}</h2>
@@ -27,7 +27,7 @@ const showTeddies = async() => {
                       )} €</p>
                   </div>
                   <a href="produit.html?${teddy._id}" class="stretched-link" title="Cliquer pour voir le produit"></a>
-              </div>
+              </article>
             </div>
           `
       )

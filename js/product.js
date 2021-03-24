@@ -1,3 +1,8 @@
+const resultProductId = document.getElementById("resultProduct");
+const selectColors = document.getElementById("selectColors");
+const idName = document.getElementById("name");
+const addBasket = document.getElementById("addBasket");
+
 //Récupérer la chaîne de caractère de l'id dans l'URL
 const stringUrlId = window.location.search;
 
@@ -6,12 +11,6 @@ const id = stringUrlId.slice(1);
 
 //Ajout de l'id à l'URL
 const urlId = `http://localhost:3000/api/teddies/${id}`;
-
-const resultProductId = document.getElementById("resultProduct");
-const selectColors = document.getElementById("selectColors");
-const idName = document.getElementById("name");
-const addBasket = document.getElementById("addBasket");
-
 
 //Appel fetch de l'API avec l'id dans l'url pour sélectionner 1 seul produit
 fetch(urlId)
@@ -51,14 +50,15 @@ fetch(urlId)
 // Ajout des éléments sur le produit au clic "Ajouter au panier"        
         addBasket.addEventListener("click", (event) => {
             event.preventDefault();
-            const valOption = selectColors.value;
+            const valOption = selectColors.options[selectColors.selectedIndex].text; //Pour afficher la couleur choisit
             let elementsProduct = {
                 imageUrl : data.imageUrl,
+                id : data._id,
                 name : data.name,
                 option : valOption,
+                quantity : 1,
                 price : data.price,
             }
-            console.log(elementsProduct);
 // Envoi des éléments dans le localStorage 
             let elementsInStorage = JSON.parse(localStorage.getItem("product")); //Convertir en format JSON les éléments dans le local storage
 //Fonction ajout du produit dans le panier 
@@ -69,21 +69,20 @@ fetch(urlId)
                         JSON.stringify(elementsInStorage)
                     ); 
             }
-//Produits dans le localStorage
+//Produits dans le localStorage, appel de la fonction
             if (elementsInStorage) {
                 addToBasket();
             } else {
                 elementsInStorage = [];
                 addToBasket();
-            } 
-            console.log(elementsInStorage)             
+            }   
         });
     })
 ;
 
 //Pour mettre une virgule dans le prix à la dizaine
 function priceWithCommas(x) {
-  return x.toString().replace(/\B(?=(\d{2})+(?!\d))/g, ",");
+    return x.toString().replace(/\B(?=(\d{2})+(?!\d))/g, ",");
 }
 
 

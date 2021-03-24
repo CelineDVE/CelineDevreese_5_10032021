@@ -1,5 +1,8 @@
+/* Pour que le footer reste en bas de la page*/
 body {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin: 0;
+    padding: 0; 
 }
 
 main {
@@ -30,25 +33,42 @@ header h1 {
     font-size: 1.2rem;
 }
 
-.carousel img {
-    width: 100%;
-    height: 600px;
-    object-fit: cover;
-}
-
 .price {
     font-size: 1.6rem;
 }
 
-button.btn {
+button.add-cart, 
+button#removeAll{
     background-color: #d21929;
     color: #fff;
     font-size: 1.2rem;
     padding: .8rem 1.8rem;
+    border-radius: .3rem;
 }
 
 button.btn:hover {
     color: #fff;
+
+}
+
+article.cardBasket  {
+    display: flex;
+    justify-content: space-around;
+    margin: auto;
+    width: 90%;
+    border: solid 1px #000;
+    border-left-width: 0;
+    border-right-width: 0;
+    padding-top: 1rem;
+}
+
+.nullBasket {
+    margin: 2rem;
+    text-align: center;
+}
+
+#quantity {
+    display: flex;
 
 }
 
