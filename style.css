@@ -38,7 +38,8 @@ header h1 {
 }
 
 button.add-cart, 
-button#removeAll{
+button#removeAll,
+#submit {
     background-color: #d21929;
     color: #fff;
     font-size: 1.2rem;
@@ -67,9 +68,17 @@ article.cardBasket  {
     text-align: center;
 }
 
-#quantity {
-    display: flex;
+#contact {
+    width: 70%;
+    margin: auto;
+    margin-top: 3rem;
+    border: 2px solid #000;
+    padding: 1rem;
+    border-radius: 1rem;
+}
 
+#submit {
+    width: 100%;
 }
 
 footer h3 {

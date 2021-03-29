@@ -60,22 +60,18 @@ fetch(urlId)
                 price : data.price,
             }
 // Envoi des éléments dans le localStorage 
-            let elementsInStorage = JSON.parse(localStorage.getItem("product")); //Convertir en format JSON les éléments dans le local storage
-//Fonction ajout du produit dans le panier 
-            const addToBasket = () => {
+            let elementsInStorage = JSON.parse(localStorage.getItem("products")); //Convertir en format JSON les éléments dans le local storage
+            for (let i = 0; i < elementsInStorage.length; i++) {
+              if (
+                elementsInStorage[i]._id == elementsProduct._id &&
+                elementsInStorage[i].colors == elementsProduct.colors
+              ) {
+                elementsInStorage[i].quantity += elementsProduct.quantity;
+              } else {
                 elementsInStorage.push(elementsProduct);
-                    localStorage.setItem(
-                        "product",
-                        JSON.stringify(elementsInStorage)
-                    ); 
+                break;
+              }
             }
-//Produits dans le localStorage, appel de la fonction
-            if (elementsInStorage) {
-                addToBasket();
-            } else {
-                elementsInStorage = [];
-                addToBasket();
-            }   
         });
     })
 ;
