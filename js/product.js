@@ -17,7 +17,8 @@ fetch(urlId)
     .then(response => response.json()) 
     .then(data => {
 // HTML des éléments avec le lien vers l'API
-        resultProductId.innerHTML = ` 
+        resultProductId.innerHTML = 
+        ` 
                 <div class="col-12 text-center">
                     <h2 class="mt-3">${data.name}</h2>
                 </div>
@@ -38,7 +39,6 @@ fetch(urlId)
             `;
 // Ajout du nom de la peluche pour le choix de la couleur
         idName.innerHTML = `${data.name}`;
-
 // Construction des options pour la liste déroulante
         let option;
         Object.entries(data.colors).forEach(color => {
@@ -61,18 +61,25 @@ fetch(urlId)
             }
 // Envoi des éléments dans le localStorage 
             let elementsInStorage = JSON.parse(localStorage.getItem("products")); //Convertir en format JSON les éléments dans le local storage
-            for (let i = 0; i < elementsInStorage.length; i++) {
-              if (
-                elementsInStorage[i]._id == elementsProduct._id &&
-                elementsInStorage[i].colors == elementsProduct.colors
-              ) {
-                elementsInStorage[i].quantity += elementsProduct.quantity;
-              } else {
+            
+//Fonction ajout du produit dans le panier 
+            const addToBasket = () => {
                 elementsInStorage.push(elementsProduct);
-                break;
-              }
+                localStorage.setItem("products", JSON.stringify(elementsInStorage)); 
+                console.log(elementsInStorage);
             }
+//Produits dans le localStorage, appel de la fonction
+            if (elementsInStorage) {
+                addToBasket();
+                alert("L'article a été ajouté au panier");
+            } else {
+                elementsInStorage = [];
+                addToBasket();
+                alert("L'article a été ajouté au panier");
+            }
+            
         });
+        
     })
 ;
 

@@ -95,7 +95,7 @@ for (let j = 0; j < removeElement.length; j++) {
 
 
 //Garder les valeurs dans le formulaire 
-const dataFormLocalStorage = localStorage.getItem("form");
+const dataFormLocalStorage = localStorage.getItem("contact");
 const dataFormInLocalStorage = JSON.parse(dataFormLocalStorage);
 
 document.getElementById("firstName").value = dataFormInLocalStorage.firstName;
@@ -140,7 +140,7 @@ for (let i = 0; i < panier.length; i++) {
   }
   //**********************//
 
-  //Fonction ajout du produit dans le panier 
+//Fonction ajout du produit dans le panier 
             const addToBasket = () => {
                 elementsInStorage.push(elementsProduct);
                 localStorage.setItem("products", JSON.stringify(elementsInStorage)); 
@@ -150,5 +150,80 @@ for (let i = 0; i < panier.length; i++) {
                 addToBasket();
             } else {
                 elementsInStorage = [];
+
                 addToBasket();
             }   
+
+
+            for (let j = 0; j < elementsInStorage.length; j++) {
+              if (
+                elementsInStorage[j]._id == data._id &&
+                elementsInStorage[j].colors == data.colors
+              ) {
+                elementsInStorage[j].quantity += data.quantity;
+              } else {
+                elementsInStorage.push(elementsProduct);
+                break;
+              }
+            }
+
+// Formulaire 
+
+let contact = {
+  firstName: firstName.value,
+  lastName: lastName.value,
+  address: address.value,
+  city: city.value,
+  email: email.value
+};
+
+//Récupérer l'orderId
+const url = `http://localhost:3000/api/teddies/order`;
+const myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+const myInit = { 
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify({
+      contact: contact,
+      products: products
+    })
+  };
+
+fetch (url, myInit)
+  .then(response => response.json())
+  .then(order => {
+    localStorage.setItem("orderId", order.orderId);
+    window.location.href = "validation.html";
+  })
+
+
+//Récupérer l'orderId
+const urlOrder = `http://localhost:3000/api/teddies/order`;
+
+const myInit = { 
+    method: 'POST',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      contact: contact,
+      products: products
+    })
+  };
+
+fetch (urlOrder, myInit)
+  .then(response => response.json())
+  .then(order => {
+    localStorage.setItem("orderId", order.orderId);
+  })
+
+
+// Garder les éléments dans le formulaire
+const dataContact = localStorage.getItem("contact");
+const dataContactLS = JSON.parse(dataContact);
+
+document.getElementById("firstName").value = dataContactLS.firstName;
+document.getElementById("lastName").value = dataContactLS.lastName;
+document.getElementById("address").value = dataContactLS.address;
+document.getElementById("city").value = dataContactLS.city;
+document.getElementById("email").value = dataContactLS.email;
