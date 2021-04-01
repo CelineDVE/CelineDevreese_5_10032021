@@ -1,33 +1,35 @@
 const elementsInBasket = document.getElementById("elementsInBasket");
-let productId = [];
+let productsInBasket = [];
 
 //Appel du tableau dans le localStorage
-let productsInBasket = localStorage.getItem("products");
-productsInBasket = JSON.parse(productsInBasket);
+let productsCart = localStorage.getItem("products");
+productsCart = JSON.parse(productsCart);
 
-if (productsInBasket === null) {
+console.log(productsCart);
+
+if (productsCart === null) {
   elementsInBasket.innerHTML = ` 
       <div class="nullBasket text-size font-weight-bold">
           <p>Le panier est vide</p>
       </div>
     `;
 } else {
-  for (i = 0; i < productsInBasket.length; i++) {
-    productId =
-      productId +
+  for (i = 0; i < productsCart.length; i++) {
+    productsInBasket =
+      productsInBasket +
       `
           <article  class="cardBasket mt-5">
                 <img src="${
-                  productsInBasket[i].imageUrl
+                  productsCart[i].imageUrl
                 }" witdh="120" height="80" alt="photo du produit" class="mb-3">
-                <p class="my-auto">${productsInBasket[i].name}</p>
-                <p class="my-auto">Couleur : ${productsInBasket[i].option}</p>
+                <p class="my-auto">${productsCart[i].name}</p>
+                <p class="my-auto">Couleur : ${productsCart[i].option}</p>
                 <div id="quantity" class="my-auto">
-                  <span class="ml-1 mr-1">${productsInBasket[i].quantity}</span>
+                  <span class="ml-1 mr-1">${productsCart[i].quantity}</span>
                 </div>
                 <p class="my-auto totalArticle">
                   Prix : ${priceWithCommas(
-                    productsInBasket[i].quantity * productsInBasket[i].price
+                    productsCart[i].quantity * productsCart[i].price
                   )}
                 </p>
                 <i id="remove" class="fas fa-trash-alt my-auto"></i>
@@ -36,8 +38,8 @@ if (productsInBasket === null) {
     ;
   }
   
-  if (i === productsInBasket.length) {
-    elementsInBasket.innerHTML = productId;
+  if (i === productsCart.length) {
+    elementsInBasket.innerHTML = productsInBasket;
     }
 
   
@@ -67,8 +69,8 @@ if (productsInBasket === null) {
 const totalPriceHtml = document.getElementById("totalPrice");
 let totalPriceArray = [];
 
-for (let k = 0; k < productsInBasket.length; k++) {
-  let priceBasket = productsInBasket[k].price;
+for (let k = 0; k < productsCart.length; k++) {
+  let priceBasket = productsCart[k].price;
   totalPriceArray.push(priceBasket);
 }
 const reducer = (accumulator, currentValue) => accumulator + currentValue;
@@ -91,13 +93,6 @@ function priceWithCommas(x) {
 // Formulaire 
 const submitBtn = document.getElementById("submit");
 
-let productArray = [];
-for (l = 0; l < Object.keys(elementsInBasket).length; l++) {
-  productArray[l] = Object.values(elementsInBasket)[l]._id;
-}
-
-console.log(productArray);
-
 submitBtn.addEventListener("click", (event) => {
   event.preventDefault();
   const contact = {
@@ -110,10 +105,17 @@ submitBtn.addEventListener("click", (event) => {
     
   localStorage.setItem("contact", JSON.stringify(contact));
 
+  let products = [];
+    productsCart.forEach(product => {
+    products.push(product.id);
+  });
+
   const data = {
     contact: contact,
-    productId: productArray,
+    products,
   }; 
+
+  console.log(data);
   //Récupérer l'orderId
   const urlOrder = `http://localhost:3000/api/teddies/order`;
   const myInit = {
@@ -127,7 +129,7 @@ submitBtn.addEventListener("click", (event) => {
     .then(order => {
       localStorage.removeItem("data");
       localStorage.setItem("orderId", order.orderId);
-     
+      window.location.href = "validation.html";
     })
 });
 
