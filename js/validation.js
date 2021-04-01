@@ -22,9 +22,7 @@ confirmContact.innerHTML = `
         <p class="my-auto">${validationProducts.name}</p>
         <p class="my-auto">Couleur : ${validationProducts.option}</p>
         <p class="my-auto totalArticle">
-            Prix : (
-                validationProducts.quantity * validationProducts.price
-            )}
+            Prix : ${validationProducts.quantity * validationProducts.price}
         </p>
     </div>
 `

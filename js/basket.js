@@ -4,7 +4,6 @@ let productId = [];
 //Appel du tableau dans le localStorage
 let productsInBasket = localStorage.getItem("products");
 productsInBasket = JSON.parse(productsInBasket);
-console.log(productsInBasket);
 
 if (productsInBasket === null) {
   elementsInBasket.innerHTML = ` 
@@ -92,33 +91,43 @@ function priceWithCommas(x) {
 // Formulaire 
 const submitBtn = document.getElementById("submit");
 
+let productArray = [];
+for (l = 0; l < Object.keys(elementsInBasket).length; l++) {
+  productArray[l] = Object.values(elementsInBasket)[l]._id;
+}
+
+console.log(productArray);
+
 submitBtn.addEventListener("click", (event) => {
   event.preventDefault();
   const contact = {
-    firstName: document.getElementById("firstName").value,
-    lastName: document.getElementById("lastName").value,
-    address: document.getElementById("address").value,
-    city: document.getElementById("city").value,
-    email: document.getElementById("email").value,
-  } 
+      firstName: document.getElementById("firstName").value,
+      lastName: document.getElementById("lastName").value,
+      address: document.getElementById("address").value,
+      city: document.getElementById("city").value,
+      email: document.getElementById("email").value,
+    }
+    
   localStorage.setItem("contact", JSON.stringify(contact));
-  products = productId;
+
+  const data = {
+    contact: contact,
+    productId: productArray,
+  }; 
   //Récupérer l'orderId
   const urlOrder = `http://localhost:3000/api/teddies/order`;
-  const myInit = { 
+  const myInit = {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({
-      contact: contact,
-      products: products
-    })
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
   };
 
   fetch (urlOrder, myInit)
     .then(response => response.json())
     .then(order => {
+      localStorage.removeItem("data");
       localStorage.setItem("orderId", order.orderId);
-      window.location.href = "validation.html";
+     
     })
 });
 
