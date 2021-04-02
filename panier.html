@@ -45,26 +45,28 @@
 
         <form id="contact" name="contact" method="POST">
             <p class="font-weight-bold">Merci de remplir ce formulaire pour valider votre commande.</p>
-            <div class="form-outline">          
-                <label for="firstName">Votre prénom :</label>
-                <input class="form-control" type="text" name="firstName" id="firstName" placeholder="Jean" required maxlength="50">
-            </div>            
-            <div class="form-outline">
-                <label for="lastName">Votre nom :</label>
-                <input class="form-control" type="text" name="lastName" id="lastName" placeholder="DUPONT" autofocus required maxlength="50">
+            <div class="form-row">
+                <div class="form-outline col-lg-6">          
+                    <label class="col-form-label" for="firstName">Prénom</label>
+                    <input class="form-control" type="text" name="firstName" id="firstName" placeholder="Jean" required maxlength="50">
+                </div>            
+                <div class="form-outline col-lg-6">
+                    <label class="col-form-label" for="lastName">Nom</label>
+                    <input class="form-control" type="text" name="lastName" id="lastName" placeholder="DUPONT" autofocus required maxlength="50">
+                </div>
             </div>
-            <div class="form-outline">
-                <label for="address">Votre adresse :</label>
+            <div class="form-outline mt-3">
+                <label for="address">Adresse</label>
                 <input class="form-control" type="text" name="address" id="address" placeholder="21 rue Marthe Nollet" required maxlength="50">
             </div>
-            <div class="form-outline">
-                <label for="city">Votre ville :</label>
+            <div class="form-outline mt-3">
+                <label for="city">Ville</label>
                 <input class="form-control" type="text" name="city" id="city" placeholder="75000 PARIS" required maxlength="50">
             </div>
-            <div class="form-outline">
-                <label for="email">Votre e-mail :</label>
+            <div class="form-outline mt-3">
+                <label for="email">E-mail</label>
                 <input id="email" class="form-control" type="email" placeholder="jeandupont@gmail.com" required maxlength="50">
-            </div>            
+            </div>
             <input type="submit" name="submit" id="submit" value="Valider la commande" class="mt-3">
         </form>
         <div id="progress"></div>

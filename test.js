@@ -177,27 +177,6 @@ let contact = {
   email: email.value
 };
 
-//Récupérer l'orderId
-const url = `http://localhost:3000/api/teddies/order`;
-const myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
-
-const myInit = { 
-    method: 'POST',
-    headers: myHeaders,
-    body: JSON.stringify({
-      contact: contact,
-      products: products
-    })
-  };
-
-fetch (url, myInit)
-  .then(response => response.json())
-  .then(order => {
-    localStorage.setItem("orderId", order.orderId);
-    window.location.href = "validation.html";
-  })
-
 
 //Récupérer l'orderId
 const urlOrder = `http://localhost:3000/api/teddies/order`;
@@ -227,3 +206,56 @@ document.getElementById("lastName").value = dataContactLS.lastName;
 document.getElementById("address").value = dataContactLS.address;
 document.getElementById("city").value = dataContactLS.city;
 document.getElementById("email").value = dataContactLS.email;
+
+
+submitBtn.addEventListener("click", (event) => {
+  event.preventDefault();
+  const contact = {
+      firstName: document.getElementById("firstName").value,
+      lastName: document.getElementById("lastName").value,
+      address: document.getElementById("address").value,
+      city: document.getElementById("city").value,
+      email: document.getElementById("email").value,
+    }
+    
+  localStorage.setItem("contact", JSON.stringify(contact));
+
+  let products = [];
+    productsCart.forEach(product => {
+    products.push(product.id);
+  });
+
+  const data = {
+    contact: contact,
+    products,
+  }; 
+
+  console.log(data);
+  //Récupérer l'orderId
+  const urlOrder = `http://localhost:3000/api/teddies/order`;
+  const myInit = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  };
+
+  fetch (urlOrder, myInit)
+    .then(response => response.json())
+    .then(order => {
+      localStorage.removeItem("data");
+      localStorage.setItem("orderId", order.orderId);
+      window.location.href = "validation.html";
+    })
+});
+
+// Garder les éléments dans le formulaire
+const dataContact = localStorage.getItem("contact");
+const dataContactLS = JSON.parse(dataContact);
+
+document.getElementById("firstName").value = dataContactLS.firstName;
+document.getElementById("lastName").value = dataContactLS.lastName;
+document.getElementById("address").value = dataContactLS.address;
+document.getElementById("city").value = dataContactLS.city;
+document.getElementById("email").value = dataContactLS.email;
+//******************************************//
+

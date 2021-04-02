@@ -39,7 +39,8 @@ header h1 {
 
 button.add-cart, 
 button#removeAll,
-#submit {
+#submit,
+.returnIndex {
     background-color: #d21929;
     color: #fff;
     font-size: 1.2rem;
@@ -49,7 +50,6 @@ button#removeAll,
 
 button.btn:hover {
     color: #fff;
-
 }
 
 article.cardBasket  {
@@ -79,6 +79,30 @@ article.cardBasket  {
 
 #submit {
     width: 100%;
+}
+
+.confirmCart {
+    font-size: 5rem;
+    margin-top: 3rem;
+}
+
+#recapProduct {
+    display: flex;
+    justify-content: space-around;
+    list-style-type: none;
+    margin: 0 5rem;
+    align-items: center;
+    border: solid #000;
+    border-width: 0 0 1px 0;
+}
+
+#recapProduct li {
+    padding: 1rem 3rem;
+   
+}
+
+.returnIndex {
+    width: auto;
 }
 
 footer h3 {

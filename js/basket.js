@@ -5,8 +5,6 @@ let productsInBasket = [];
 let productsCart = localStorage.getItem("products");
 productsCart = JSON.parse(productsCart);
 
-console.log(productsCart);
-
 if (productsCart === null) {
   elementsInBasket.innerHTML = ` 
       <div class="nullBasket text-size font-weight-bold">
@@ -18,31 +16,46 @@ if (productsCart === null) {
     productsInBasket =
       productsInBasket +
       `
-          <article  class="cardBasket mt-5">
-                <img src="${
-                  productsCart[i].imageUrl
-                }" witdh="120" height="80" alt="photo du produit" class="mb-3">
-                <p class="my-auto">${productsCart[i].name}</p>
-                <p class="my-auto">Couleur : ${productsCart[i].option}</p>
-                <div id="quantity" class="my-auto">
-                  <span class="ml-1 mr-1">${productsCart[i].quantity}</span>
-                </div>
-                <p class="my-auto totalArticle">
-                  Prix : ${priceWithCommas(
-                    productsCart[i].quantity * productsCart[i].price
-                  )}
-                </p>
-                <i id="remove" class="fas fa-trash-alt my-auto"></i>
-            </article>
-        `
+        <article  class="cardBasket mt-5">
+              <img src="${
+                productsCart[i].imageUrl
+              }" witdh="120" height="80" alt="photo du produit" class="mb-3">
+              <p class="my-auto">${productsCart[i].name}</p>
+              <p class="my-auto">Couleur : ${productsCart[i].option}</p>
+              <div id="quantity" class="my-auto">
+                <span class="ml-1 mr-1">${productsCart[i].quantity}</span>
+              </div>
+              <p class="my-auto totalArticle">
+                Prix : ${priceWithCommas(
+                  productsCart[i].quantity * productsCart[i].price
+                )}
+              </p>
+              <i id="remove" class="fas fa-trash-alt my-auto"></i>
+        </article>
+      `
     ;
   }
   
   if (i === productsCart.length) {
     elementsInBasket.innerHTML = productsInBasket;
-    }
+  };
 
-  
+  //Supprimer 1 article à la fois du panier
+  let removeElement = document.querySelectorAll("#remove");
+
+  for (let j = 0; j < removeElement.length; j++) {
+    removeElement[j].addEventListener("click", (event) => {
+      event.preventDefault();
+      let deleteElement = productsCart.splice(j, 1);
+      localStorage.clear(deleteElement);
+      window.location.reload();
+      console.log("deleteElement");
+
+    });
+  }
+  //**********************//
+
+
   // Pour supprimer tous les articles du panier en 1 clic
   //HTML du bouton
   const btnRemoveAll = `
@@ -63,16 +76,18 @@ if (productsCart === null) {
     window.location.href = "panier.html"; //recharge la page
   });
   //**********************//
-}
+};
 
 //Montant total du panier 
 const totalPriceHtml = document.getElementById("totalPrice");
 let totalPriceArray = [];
 
+
 for (let k = 0; k < productsCart.length; k++) {
-  let priceBasket = productsCart[k].price;
-  totalPriceArray.push(priceBasket);
+    let priceBasket = productsCart[k].price;
+    totalPriceArray.push(priceBasket);
 }
+
 const reducer = (accumulator, currentValue) => accumulator + currentValue;
 const totalPrice = totalPriceArray.reduce(reducer,0);
 const priceHTML =  `
@@ -115,7 +130,6 @@ submitBtn.addEventListener("click", (event) => {
     products,
   }; 
 
-  console.log(data);
   //Récupérer l'orderId
   const urlOrder = `http://localhost:3000/api/teddies/order`;
   const myInit = {
