@@ -82,12 +82,12 @@ if (productsCart === null) {
 const totalPriceHtml = document.getElementById("totalPrice");
 let totalPriceArray = [];
 
-
+if (productsCart) {
 for (let k = 0; k < productsCart.length; k++) {
     let priceBasket = productsCart[k].price;
     totalPriceArray.push(priceBasket);
 }
-
+}
 const reducer = (accumulator, currentValue) => accumulator + currentValue;
 const totalPrice = totalPriceArray.reduce(reducer,0);
 const priceHTML =  `
@@ -151,11 +151,13 @@ submitBtn.addEventListener("click", (event) => {
 const dataContact = localStorage.getItem("contact");
 const dataContactLS = JSON.parse(dataContact);
 
+if (dataContact){
 document.getElementById("firstName").value = dataContactLS.firstName;
 document.getElementById("lastName").value = dataContactLS.lastName;
 document.getElementById("address").value = dataContactLS.address;
 document.getElementById("city").value = dataContactLS.city;
 document.getElementById("email").value = dataContactLS.email;
+}
 //******************************************//
 
 
