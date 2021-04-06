@@ -16,15 +16,19 @@ if (productsCart === null) {
     productsInBasket =
       productsInBasket +
       `
-        <article class="cardBasket mt-5">
-          <img src="${productsCart[i].imageUrl}" witdh="120" height="80" alt="photo du produit" class="mb-3">
+        <article  class="cardBasket mt-5">
+          <img src="${
+            productsCart[i].imageUrl
+          }" witdh="120" height="80" alt="photo du produit" class="mb-3">
           <p class="my-auto">${productsCart[i].name}</p>
-          <p class="my-auto">${productsCart[i].option}</p>
+          <p class="my-auto">Couleur : ${productsCart[i].option}</p>
           <div id="quantity" class="my-auto">
             <span class="ml-1 mr-1">${productsCart[i].quantity}</span>
           </div>
           <p class="my-auto totalArticle">
-            ${priceWithCommas(productsCart[i].price)} €
+            Prix : ${priceWithCommas(
+              productsCart[i].quantity * productsCart[i].price
+            )} €
           </p>
         </article>
       `
@@ -89,51 +93,51 @@ const submitBtn = document.getElementById("submit");
 const input = document.querySelectorAll(".form-control");
 console.log(input);
 
+if(input.value = "") {
+  console.log("check");
+} else {
+  console.log("bad check");
+}
 
-if (productsCart && input.checked === true) {
-  submitBtn.addEventListener("click", (event) => {
-    const contact = {
-        firstName: document.getElementById("firstName").value,
-        lastName: document.getElementById("lastName").value,
-        address: document.getElementById("address").value,
-        city: document.getElementById("city").value,
-        email: document.getElementById("email").value,
-      }
-      
-    localStorage.setItem("contact", JSON.stringify(contact));
+submitBtn.addEventListener("click", (event) => {
+  event.preventDefault();
+  const contact = {
+    firstName: document.getElementById("firstName").value,
+    lastName: document.getElementById("lastName").value,
+    address: document.getElementById("address").value,
+    city: document.getElementById("city").value,
+    email: document.getElementById("email").value,
+  };
 
-    let products = [];
-      productsCart.forEach(product => {
-      products.push(product.id);
+  localStorage.setItem("contact", JSON.stringify(contact));
+
+  let products = [];
+  productsCart.forEach((product) => {
+    products.push(product.id);
+  });
+
+  const data = {
+    contact: contact,
+    products,
+  };
+
+  console.log(data);
+  //Récupérer l'orderId
+  const urlOrder = `http://localhost:3000/api/teddies/order`;
+  const myInit = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  };
+
+  fetch(urlOrder, myInit)
+    .then((response) => response.json())
+    .then((order) => {
+      localStorage.removeItem("data");
+      localStorage.setItem("orderId", order.orderId);
+      window.location.href = "validation.html";
     });
-
-    const data = {
-      contact: contact,
-      products,
-    }; 
-
-    //Récupérer l'orderId
-    const urlOrder = `http://localhost:3000/api/teddies/order`;
-    const myInit = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    };
-
-    fetch (urlOrder, myInit)
-      .then(response => response.json())
-      .then(order => {
-        localStorage.removeItem("data");
-        localStorage.setItem("orderId", order.orderId);
-        window.location.href = "validation.html";
-      })
-  }); 
-} else { 
-  console.log("check bad");
-  
-};
-
-
+});
 // Garder les éléments dans le formulaire
 const dataContact = localStorage.getItem("contact");
 const dataContactLS = JSON.parse(dataContact);
@@ -144,12 +148,5 @@ document.getElementById("lastName").value = dataContactLS.lastName;
 document.getElementById("address").value = dataContactLS.address;
 document.getElementById("city").value = dataContactLS.city;
 document.getElementById("email").value = dataContactLS.email;
-}
+};
 //******************************************//
-
-
-
-
-
-
-
