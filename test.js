@@ -259,3 +259,12 @@ document.getElementById("city").value = dataContactLS.city;
 document.getElementById("email").value = dataContactLS.email;
 //******************************************//
 
+
+for (o=0; o < elementsProduct.lenght; o++) {
+  if (elementsProduct[o]._id == elementsInStorage._id && elementsProduct[o].option == elementsInStorage.option) {
+      elementsProduct[o].quantity += elementsInStorage.quantity;
+  } else {
+      elementsInStorage.push(elementsProduct);
+      localStorage.setItem("products", JSON.stringify(elementsInStorage)); 
+  }
+}

@@ -45,7 +45,8 @@ const priceHTML =  `
 recapTotalPrice.insertAdjacentHTML("beforeend", priceHTML);
 //**********************//
 
-function clearLocalStorage() {
-	localStorage.clear();
-}
-clearLocalStorage();
+//Supprimer les éléments du LocalStorage, fin de la commande
+//function clearLocalStorage() {
+//	localStorage.clear();
+//}
+//clearLocalStorage();

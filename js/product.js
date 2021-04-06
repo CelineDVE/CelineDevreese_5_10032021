@@ -77,7 +77,9 @@ fetch(urlId)
                 addToBasket();
                 alert("L'article a été ajouté au panier");
             }
+            
         });
+        
     })
 ;
 
