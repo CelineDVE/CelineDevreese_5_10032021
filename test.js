@@ -252,11 +252,13 @@ submitBtn.addEventListener("click", (event) => {
 const dataContact = localStorage.getItem("contact");
 const dataContactLS = JSON.parse(dataContact);
 
+if (dataContact) {
 document.getElementById("firstName").value = dataContactLS.firstName;
 document.getElementById("lastName").value = dataContactLS.lastName;
 document.getElementById("address").value = dataContactLS.address;
 document.getElementById("city").value = dataContactLS.city;
 document.getElementById("email").value = dataContactLS.email;
+}
 //******************************************//
 
 
@@ -268,3 +270,28 @@ for (o=0; o < elementsProduct.lenght; o++) {
       localStorage.setItem("products", JSON.stringify(elementsInStorage)); 
   }
 }
+
+fetch(urlOrder, myInit)
+    .then(response => {
+      if (response.ok) {
+        response.json()
+        .then((order) => {
+          localStorage.removeItem("data");
+          localStorage.setItem("orderId", order.orderId);
+          window.location.href = "validation.html";
+        });
+      } else {
+        alert ("Merci de remplir tous les champs du formulaire")
+      }
+    }) 
+
+    for (p = 0; p < input.length; p++) {
+      if (productsCart && input[p].checkValidity() === true) {
+        submitBtn.addEventListener("click", (event) => {
+          event.preventDefault();
+          sentOrder();
+        })
+      }else {
+        console.log("bad check");
+      }
+    }

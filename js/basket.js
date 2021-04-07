@@ -91,7 +91,6 @@ function priceWithCommas(x) {
 // Formulaire 
 const submitBtn = document.getElementById("submit");
 const input = document.querySelectorAll(".form-control");
-console.log(input);
 
 // Fonction pour récupérer les éléments du form, préparer les éléments et les envoyer au serveur
 function sentOrder() { 
@@ -124,36 +123,37 @@ function sentOrder() {
     body: JSON.stringify(data),
   };
 
-    fetch(urlOrder, myInit)
-    .then(response => {
-      if (response.ok) {
-        response.json()
-        .then((order) => {
-          localStorage.removeItem("data");
-          localStorage.setItem("orderId", order.orderId);
-          window.location.href = "validation.html";
-        });
-      } else {
-        alert ("Merci de remplir tous les champs du formulaire")
-      }
-    }) 
+  fetch(urlOrder, myInit)
+  .then(response => {
+    if (response.ok) {
+      response.json()
+      .then((order) => {
+        localStorage.removeItem("data");
+        localStorage.setItem("orderId", order.orderId);
+        window.location.href = "validation.html";
+      });
+    } else {
+      alert ("Merci de remplir tous les champs du formulaire")
+    }
+  }) 
 };
 //*********** Fin de la fonction ************//
 
+//Appel de la fonction au clique du bouton
 submitBtn.addEventListener("click", (event) => {
   event.preventDefault();
   sentOrder();
-});
+})
 
 // Garder les éléments dans le formulaire
 const dataContact = localStorage.getItem("contact");
 const dataContactLS = JSON.parse(dataContact);
 
-if (dataContact){
-document.getElementById("firstName").value = dataContactLS.firstName;
-document.getElementById("lastName").value = dataContactLS.lastName;
-document.getElementById("address").value = dataContactLS.address;
-document.getElementById("city").value = dataContactLS.city;
-document.getElementById("email").value = dataContactLS.email;
-};
+if (dataContact) {
+  document.getElementById("firstName").value = dataContactLS.firstName;
+  document.getElementById("lastName").value = dataContactLS.lastName;
+  document.getElementById("address").value = dataContactLS.address;
+  document.getElementById("city").value = dataContactLS.city;
+  document.getElementById("email").value = dataContactLS.email;
+}
 //******************************************//

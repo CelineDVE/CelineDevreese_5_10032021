@@ -10,7 +10,6 @@ const fetchTeddies = async() => {
 
 const showTeddies = async() => {
     await fetchTeddies();
-
     //HTML des éléments des produits
     resultsCard.innerHTML = teddies
       .map(
