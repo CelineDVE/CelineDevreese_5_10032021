@@ -93,14 +93,8 @@ const submitBtn = document.getElementById("submit");
 const input = document.querySelectorAll(".form-control");
 console.log(input);
 
-if(input.value = "") {
-  console.log("check");
-} else {
-  console.log("bad check");
-}
-
-submitBtn.addEventListener("click", (event) => {
-  event.preventDefault();
+// Fonction pour récupérer les éléments du form, préparer les éléments et les envoyer au serveur
+function sentOrder() { 
   const contact = {
     firstName: document.getElementById("firstName").value,
     lastName: document.getElementById("lastName").value,
@@ -130,14 +124,27 @@ submitBtn.addEventListener("click", (event) => {
     body: JSON.stringify(data),
   };
 
-  fetch(urlOrder, myInit)
-    .then((response) => response.json())
-    .then((order) => {
-      localStorage.removeItem("data");
-      localStorage.setItem("orderId", order.orderId);
-      window.location.href = "validation.html";
-    });
+    fetch(urlOrder, myInit)
+    .then(response => {
+      if (response.ok) {
+        response.json()
+        .then((order) => {
+          localStorage.removeItem("data");
+          localStorage.setItem("orderId", order.orderId);
+          window.location.href = "validation.html";
+        });
+      } else {
+        alert ("Merci de remplir tous les champs du formulaire")
+      }
+    }) 
+};
+//*********** Fin de la fonction ************//
+
+submitBtn.addEventListener("click", (event) => {
+  event.preventDefault();
+  sentOrder();
 });
+
 // Garder les éléments dans le formulaire
 const dataContact = localStorage.getItem("contact");
 const dataContactLS = JSON.parse(dataContact);
