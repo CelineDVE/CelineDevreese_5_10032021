@@ -47,6 +47,16 @@ fetch(urlId)
             option.value = color[0];
             selectColors.add(option);
         });
+
+        // Gestion quantité
+        const quantityValue = `
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        `;
+        const selectQuantity = document.getElementById("selectQuantity");
+        selectQuantity.innerHTML = quantityValue;
+
 // Ajout des éléments sur le produit au clic "Ajouter au panier"        
         addBasket.addEventListener("click", (event) => {
             event.preventDefault();
@@ -77,11 +87,12 @@ fetch(urlId)
                 addToBasket();
                 alert("L'article a été ajouté au panier");
             }
-            
+
         });
         
     })
 ;
+
 
 //Pour mettre une virgule dans le prix à la dizaine
 function priceWithCommas(x) {

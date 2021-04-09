@@ -39,6 +39,10 @@ if (productsCart === null) {
     elementsInBasket.innerHTML = productsInBasket;
   };
 
+  //Gestion des quantités
+
+  
+
   // Pour supprimer tous les articles du panier en 1 clic
   //HTML du bouton
   const btnRemoveAll = `
