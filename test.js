@@ -295,3 +295,48 @@ fetch(urlOrder, myInit)
         console.log("bad check");
       }
     }
+
+     if (/^[a-z- A-Z]{3,30}$/.test(firstName)) {
+      console.log("firstnameok");
+   
+    } else {
+      console.log("firstnamebad");
+      
+    }
+
+  function lastNameCheck (){
+    if (/^[a-z A-Z]{3,30}$/.test(lastName)) {
+    console.log("lastnameok");
+    return true;
+    } else {
+      console.log("lastnamebad");
+      return false;
+    }
+  };
+  function addressCheck () {
+    if (/^[0-9 a-z A-Z]{3,30}$/.test(address)) {
+      console.log("addressok");
+      return true;
+    } else {
+      console.log("addressbad");
+      return false;
+    }
+  };
+  function cityCheck() {
+    if (/^[0-9 a-z A-Z]{3,30}$/.test(city)) {
+    console.log("cityok");
+    return true;
+    } else {
+      console.log("citybad");
+      return false;
+    }
+  };
+  function emailCheck () {
+    if(/^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/.test(email)) {
+      console.log("emailok");
+      return true;
+    } else {
+      console.log("emailbad");
+      return false;
+    }
+  };

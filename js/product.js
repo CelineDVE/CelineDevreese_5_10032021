@@ -61,13 +61,19 @@ fetch(urlId)
         addBasket.addEventListener("click", (event) => {
             event.preventDefault();
             const valOption = selectColors.options[selectColors.selectedIndex].text; //Pour afficher la couleur choisit
+
+            // Gestion quantité au click
+            const quantity = selectQuantity.value;
+            console.log("quantité", quantity);
+
+// Tableau des éléments du produit pour le localStorage
             let elementsProduct = {
                 imageUrl : data.imageUrl,
                 id : data._id,
                 name : data.name,
                 option : valOption,
-                quantity : 1,
-                price : data.price,
+                quantity : quantity,
+                price : data.price * quantity,
             }
 // Envoi des éléments dans le localStorage 
             let elementsInStorage = JSON.parse(localStorage.getItem("products")); //Convertir en format JSON les éléments dans le local storage
@@ -87,7 +93,6 @@ fetch(urlId)
                 addToBasket();
                 alert("L'article a été ajouté au panier");
             }
-
         });
         
     })

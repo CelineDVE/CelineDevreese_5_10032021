@@ -26,9 +26,7 @@ if (productsCart === null) {
             <span class="ml-1 mr-1">${productsCart[i].quantity}</span>
           </div>
           <p class="my-auto totalArticle">
-            Prix : ${priceWithCommas(
-              productsCart[i].quantity * productsCart[i].price
-            )} €
+            Prix : ${productsCart[i].price / 100},00 €
           </p>
         </article>
       `
@@ -38,10 +36,6 @@ if (productsCart === null) {
   if (i === productsCart.length) {
     elementsInBasket.innerHTML = productsInBasket;
   };
-
-  //Gestion des quantités
-
-  
 
   // Pour supprimer tous les articles du panier en 1 clic
   //HTML du bouton
@@ -97,7 +91,7 @@ const submitBtn = document.getElementById("submit");
 const input = document.querySelectorAll(".form-control");
 
 // Fonction pour récupérer les éléments du form, préparer les éléments et les envoyer au serveur
-function sentOrder() { 
+function sentOrder() {
   const contact = {
     firstName: document.getElementById("firstName").value,
     lastName: document.getElementById("lastName").value,
@@ -108,12 +102,13 @@ function sentOrder() {
 
   localStorage.setItem("contact", JSON.stringify(contact));
 
+ 
   let products = [];
   productsCart.forEach((product) => {
-    products.push(product.id);
+  products.push(product.id);
   });
 
-  const data = {
+  let data = {
     contact: contact,
     products,
   };
@@ -128,26 +123,80 @@ function sentOrder() {
   };
 
   fetch(urlOrder, myInit)
-  .then(response => {
-    if (response.ok) {
-      response.json()
-      .then((order) => {
-        localStorage.removeItem("data");
-        localStorage.setItem("orderId", order.orderId);
-        window.location.href = "validation.html";
-      });
-    } else {
-      alert ("Merci de remplir tous les champs du formulaire")
-    }
-  }) 
+    .then((response) => response.json())
+    .then((order) => {
+      localStorage.removeItem("data");
+      localStorage.setItem("orderId", order.orderId);
+      window.location.href = "validation.html";
+    });
 };
 //*********** Fin de la fonction ************//
+
+//Vérification du formulaire
 
 //Appel de la fonction au clique du bouton
 submitBtn.addEventListener("click", (event) => {
   event.preventDefault();
-  sentOrder();
-})
+
+  function checkInput (input, regExp) {
+    return input.value.match(regExp) !== null;
+  }
+
+  let alertFields = document.querySelectorAll(".alertFields");
+    for (let i = 0; i < alertFields.length; i++) {
+      alertFields[i].remove();
+    };
+
+  let
+    firstName = document.getElementById("firstName"),
+    lastName = document.getElementById("lastName"),
+    address = document.getElementById("address"),
+    city = document.getElementById("city"),
+    email =  document.getElementById("email");
+
+  let 
+    textRegex = /^[a-z A-Z]{3,30}$/,
+    textNumberRegex = /^[0-9 a-z A-Z]{3,30}$/,
+    emailRegex = /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/;
+
+  let
+    firstNameCheck = checkInput(firstName, textRegex),
+    lastNameCheck = checkInput(lastName, textRegex),
+    addressCheck = checkInput(address, textNumberRegex),
+    cityCheck = checkInput(city, textNumberRegex),
+    emailCheck = checkInput(email, emailRegex);
+
+  let 
+    inputFields = [firstName, lastName, address, city, email],
+    fieldsValid = [firstNameCheck, lastNameCheck, addressCheck, cityCheck, emailCheck];
+    fieldsInvalid = false;
+
+  for (i = 0; i < inputFields.length; i++) {
+    if (!fieldsValid[i]) {
+      fieldsInvalid = true;
+      let inputMessage;
+      if (inputFields[i] === firstName) {
+        inputMessage = "Merci de compléter ou de corriger le prénom";
+      } else if (inputFields[i] === lastName) {
+        inputMessage = "Merci de compléter ou de corriger le nom";
+      } else if (inputFields[i] === address) {
+        inputMessage = "Merci de compléter ou de corriger l'adresse'";
+      } else if (inputFields[i] === city) {
+        inputMessage = "Merci de compléter ou de corriger la ville";
+      } else if (inputFields[i] === email) {
+        inputMessage = "Merci de compléter ou corriger l'adresse mail";
+      }
+      let alert = document.createElement("div");
+      alert.appendChild(document.createTextNode(inputMessage));
+      inputFields[i].classList.add("is-invalid");
+      alert.classList.add("alertFields", "invalid-feedback");
+      inputFields[i].parentElement.appendChild(alert);
+    } else {
+      inputFields[i].classList.add("is-valid");
+      sentOrder();
+    }
+  };
+});
 
 // Garder les éléments dans le formulaire
 const dataContact = localStorage.getItem("contact");
