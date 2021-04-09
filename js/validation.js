@@ -13,13 +13,20 @@ if (productsCart == null) {
         confirmContact.innerHTML = `
             <p class="mt-5 text-size">Merci ${JSON.parse(localStorage.getItem("contact")).firstName} pour votre commande <strong>n°${localStorage.getItem("orderId")}.</strong></p>
             <p class="text-left ml-5 mt-5">Voici un récapitulatif de votre commande :</p>`;
-        recap = recap + `
-            <ul id="recapProduct">
-                <li>${productsCart[m].name}</li>
-                <li>Couleur : ${productsCart[m].option}</li>
-                <li>${productsCart[m].quantity}</li>
-                <li>${productsCart[m].price / 100},00 €</li>
-            </ul>`
+        recap =
+          recap +
+          `
+        <article  class="cardBasket mt-5">
+          <img src="${
+            productsCart[m].imageUrl
+          }" witdh="120" height="80" alt="photo du produit" class="mb-3">
+          <p class="my-auto">${productsCart[m].name}</p>
+          <p class="my-auto">${productsCart[m].option}</p>
+          <div id="quantity" class="my-auto">
+            <span class="ml-1 mr-1">${productsCart[m].quantity}</span>
+          </div>
+          <p class="my-auto totalArticle">${productsCart[m].price / 100},00 €</p>
+        </article>`
     }
     if (m === productsCart.length) {
     confirmProducts.innerHTML = recap;

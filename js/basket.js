@@ -21,16 +21,15 @@ if (productsCart === null) {
             productsCart[i].imageUrl
           }" witdh="120" height="80" alt="photo du produit" class="mb-3">
           <p class="my-auto">${productsCart[i].name}</p>
-          <p class="my-auto">Couleur : ${productsCart[i].option}</p>
+          <p class="my-auto">${productsCart[i].option}</p>
           <div id="quantity" class="my-auto">
             <span class="ml-1 mr-1">${productsCart[i].quantity}</span>
           </div>
-          <p class="my-auto totalArticle">
-            Prix : ${productsCart[i].price / 100},00 €
-          </p>
+          <p class="my-auto totalArticle">${
+            productsCart[i].price / 100
+          },00 €</p>
         </article>
-      `
-    ;
+      `;
   }
   
   if (i === productsCart.length) {
