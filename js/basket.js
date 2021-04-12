@@ -137,9 +137,7 @@ function sentOrder() {
 submitBtn.addEventListener("click", (event) => {
   event.preventDefault();
 
-  function checkInput (input, regExp) {
-    return input.value.match(regExp) !== null;
-  }
+
 
   let alertFields = document.querySelectorAll(".alertFields");
     for (let i = 0; i < alertFields.length; i++) {
@@ -147,7 +145,7 @@ submitBtn.addEventListener("click", (event) => {
     };
 
   let
-    firstName = document.getElementById("firstName"),
+    firstName = document.getElementById("firstName").value,
     lastName = document.getElementById("lastName"),
     address = document.getElementById("address"),
     city = document.getElementById("city"),
@@ -158,43 +156,18 @@ submitBtn.addEventListener("click", (event) => {
     textNumberRegex = /^[0-9 a-z A-Z]{3,30}$/,
     emailRegex = /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/;
 
-  let
-    firstNameCheck = checkInput(firstName, textRegex),
-    lastNameCheck = checkInput(lastName, textRegex),
-    addressCheck = checkInput(address, textNumberRegex),
-    cityCheck = checkInput(city, textNumberRegex),
-    emailCheck = checkInput(email, emailRegex);
 
-  let 
-    inputFields = [firstName, lastName, address, city, email],
-    fieldsValid = [firstNameCheck, lastNameCheck, addressCheck, cityCheck, emailCheck];
-    fieldsInvalid = false;
-
-  for (i = 0; i < inputFields.length; i++) {
-    if (!fieldsValid[i]) {
-      fieldsInvalid = true;
-      let inputMessage;
-      if (inputFields[i] === firstName) {
-        inputMessage = "Merci de compléter ou de corriger le prénom";
-      } else if (inputFields[i] === lastName) {
-        inputMessage = "Merci de compléter ou de corriger le nom";
-      } else if (inputFields[i] === address) {
-        inputMessage = "Merci de compléter ou de corriger l'adresse'";
-      } else if (inputFields[i] === city) {
-        inputMessage = "Merci de compléter ou de corriger la ville";
-      } else if (inputFields[i] === email) {
-        inputMessage = "Merci de compléter ou corriger l'adresse mail";
-      }
-      let alert = document.createElement("div");
-      alert.appendChild(document.createTextNode(inputMessage));
-      inputFields[i].classList.add("is-invalid");
-      alert.classList.add("alertFields", "invalid-feedback");
-      inputFields[i].parentElement.appendChild(alert);
-    } else {
-      inputFields[i].classList.add("is-valid");
-      sentOrder();
-    }
-  };
+  if (firstName == "") {
+    let inputMessage = `Merci de compléter le prénom`;
+    let alert = document.createElement("div");
+    alert.appendChild(document.createTextNode(inputMessage));
+  } else if (lastName == "") {
+    let inputMessage = `Merci de compléter le prénom`;
+    let alert = document.createElement("div");
+    alert.appendChild(document.createTextNode(inputMessage));
+  } else {
+    sentOrder();
+  }
 });
 
 // Garder les éléments dans le formulaire
