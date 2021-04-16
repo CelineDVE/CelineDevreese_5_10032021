@@ -133,11 +133,9 @@ function sentOrder() {
 
 //Vérification du formulaire
 
-//Appel de la fonction au clique du bouton
+//Appel de la fonction au clique du bouton après vérification du formulaire
 submitBtn.addEventListener("click", (event) => {
   event.preventDefault();
-
-
 
   let alertFields = document.querySelectorAll(".alertFields");
     for (let i = 0; i < alertFields.length; i++) {
@@ -146,29 +144,25 @@ submitBtn.addEventListener("click", (event) => {
 
   let
     firstName = document.getElementById("firstName").value,
-    lastName = document.getElementById("lastName"),
-    address = document.getElementById("address"),
-    city = document.getElementById("city"),
-    email =  document.getElementById("email");
+    lastName = document.getElementById("lastName").value,
+    address = document.getElementById("address").value,
+    city = document.getElementById("city").value,
+    email =  document.getElementById("email").value;
 
-  let 
-    textRegex = /^[a-z A-Z]{3,30}$/,
-    textNumberRegex = /^[0-9 a-z A-Z]{3,30}$/,
-    emailRegex = /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/;
+    function validateEmail(email) {
+      const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    }
 
-
-  if (firstName == "") {
-    let inputMessage = `Merci de compléter le prénom`;
-    let alert = document.createElement("div");
-    alert.appendChild(document.createTextNode(inputMessage));
-  } else if (lastName == "") {
-    let inputMessage = `Merci de compléter le prénom`;
-    let alert = document.createElement("div");
-    alert.appendChild(document.createTextNode(inputMessage));
-  } else {
+  if (firstName == "" || lastName == "" || address == "" || city == "" || email == "") {
+    alert("Merci de remplir tous les champs du formulaire")
+  } else if(validateEmail(email)==false){
+    alert("Adresse email incorrecte");
+  }else {
     sentOrder();
   }
 });
+
 
 // Garder les éléments dans le formulaire
 const dataContact = localStorage.getItem("contact");
