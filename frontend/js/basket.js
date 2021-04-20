@@ -2,8 +2,7 @@ const elementsInBasket = document.getElementById("elementsInBasket");
 let productsInBasket = [];
 
 //Appel du tableau dans le localStorage
-let productsCart = localStorage.getItem("products");
-productsCart = JSON.parse(productsCart);
+let productsCart = JSON.parse(localStorage.getItem("products"));
 
 if (productsCart === null) {
   elementsInBasket.innerHTML = ` 
@@ -38,12 +37,13 @@ if (productsCart === null) {
 
   // Pour supprimer tous les articles du panier en 1 clic
   //HTML du bouton
-  const btnRemoveAll = `
+  const btnRemoveAll = 
+    `
       <button name="removeAll" type="submit" id="removeAll" class="btn ml-5 mt-5">
         Vider le panier
         <i class="fas fa-trash-alt my-auto ml-1"></i>
       </button>
-      `;
+    `;
 
   //injecter le HTML du bouton dans le HTML de la structure du panier
   elementsInBasket.insertAdjacentHTML("beforeend", btnRemoveAll);
@@ -79,11 +79,6 @@ const priceHTML =  `
 elementsInBasket.insertAdjacentHTML("beforeend", priceHTML);
 //**********************//
 
-//Pour mettre une virgule dans le prix à la dizaine
-function priceWithCommas(x) {
-  return x.toString().replace(/\B(?=(\d{2})+(?!\d))/g, ",");
-};
-//******************************************//
 
 // Formulaire 
 const submitBtn = document.getElementById("submit");
@@ -101,7 +96,6 @@ function sentOrder() {
 
   localStorage.setItem("contact", JSON.stringify(contact));
 
- 
   let products = [];
   productsCart.forEach((product) => {
   products.push(product.id);
@@ -112,7 +106,6 @@ function sentOrder() {
     products,
   };
 
-  console.log(data);
   //Récupérer l'orderId
   const urlOrder = `http://localhost:3000/api/teddies/order`;
   const myInit = {
@@ -136,11 +129,6 @@ function sentOrder() {
 //Appel de la fonction au clique du bouton après vérification du formulaire
 submitBtn.addEventListener("click", (event) => {
   event.preventDefault();
-
-  let alertFields = document.querySelectorAll(".alertFields");
-    for (let i = 0; i < alertFields.length; i++) {
-      alertFields[i].remove();
-    };
 
   let
     firstName = document.getElementById("firstName").value,

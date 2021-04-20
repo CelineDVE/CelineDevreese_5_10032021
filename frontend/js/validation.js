@@ -3,8 +3,7 @@ const confirmProducts = document.getElementById("confirmProducts");
 let recap = [];
 
 //Appel du tableau dans le localStorage
-let productsCart = localStorage.getItem("products");
-productsCart = JSON.parse(productsCart);
+let productsCart = JSON.parse(localStorage.getItem("products"));
 
 if (productsCart == null) {
     confirmProducts.innerHTML = `<p class="mt-5">Votre commande n'est pas valide</p>`;

@@ -64,7 +64,6 @@ fetch(urlId)
 
             // Gestion quantité au click
             const quantity = selectQuantity.value;
-            console.log("quantité", quantity);
 
 // Tableau des éléments du produit pour le localStorage
             let elementsProduct = {
@@ -81,8 +80,7 @@ fetch(urlId)
 //Fonction ajout du produit dans le panier 
             const addToBasket = () => {
                 elementsInStorage.push(elementsProduct);
-                localStorage.setItem("products", JSON.stringify(elementsInStorage)); 
-                console.log(elementsInStorage);
+                localStorage.setItem("products", JSON.stringify(elementsInStorage));
             }
 //Produits dans le localStorage, appel de la fonction
             if (elementsInStorage) {
